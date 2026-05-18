@@ -10,6 +10,7 @@
 
 import { useState } from 'react';
 import { AnimatePresence } from 'motion/react';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { useAuth } from './context/AuthContext';
 import { Hero } from './sections/Hero';
@@ -122,6 +123,9 @@ export default function App() {
 
       {/* Scroll to top shadow */}
       <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0b0b0c] to-transparent pointer-events-none z-20" />
+      
+      {/* Vercel Analytics */}
+      <Analytics />
     </div>
   );
 }
