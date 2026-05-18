@@ -1,0 +1,6 @@
+{
+  "name": "MetaShift",
+  "description": "Premium AI-native metadata changer for images. Edit, remove, or regenerate metadata instantly with privacy-first batch processing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #8b5cf6;
+  --color-brand-alt: #d946ef;
+  --color-brand-gray: #1A1A1A;
+  --color-bg-primary: #0b0b0c;
+  --color-bg-panel: #0d1015;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-inter: var(--font-sans);
+}
+
+@layer base {
+  html, body {
+    @apply font-sans bg-black text-white antialiased;
+    margin: 0;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
+  }
+}
+
+@layer utilities {
+  .liquid-glass {
+    background: rgba(13, 16, 21, 0.95);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.08),
+      0 10px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Immersive Theme specific gradients */
+  .text-gradient-immersive {
+    background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% auto;
+    animation: gradient-flow 6s linear infinite;
+  }
+
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .bg-carbon {
+    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    background-repeat: repeat;
+  }
+}

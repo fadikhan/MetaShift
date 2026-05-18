@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // User Validation
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'displayName', 'photoURL', 'createdAt', 'lastLogin']) &&
+             data.keys().size() >= 4 && // Allowing for partials in updates if needed, but create is strict
+             data.uid == request.auth.uid &&
+             data.email is string && data.email.size() <= 256 &&
+             data.displayName is string && data.displayName.size() <= 256 &&
+             (data.photoURL == null || (data.photoURL is string && data.photoURL.size() <= 1024)) &&
+             data.createdAt is timestamp &&
+             data.lastLogin is timestamp;
+    }
+
+    function isValidUserUpdate(existing, incoming) {
+      return incoming.lastLogin == request.time &&
+             incoming.diff(existing).affectedKeys().hasOnly(['lastLogin', 'displayName', 'photoURL', 'preferences']);
+    }
+
+    // 2. Users Collection
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      
+      allow create: if isOwner(userId) && 
+                      incoming().keys().hasAll(['uid', 'email', 'displayName', 'photoURL', 'createdAt', 'lastLogin']) &&
+                      incoming().uid == request.auth.uid &&
+                      incoming().createdAt == request.time &&
+                      incoming().lastLogin == request.time;
+
+      allow update: if isOwner(userId) && isValidUserUpdate(existing(), incoming());
+
+      match /history/{historyId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Connection test document
+    match /test/connection {
+      allow get: if true;
+    }
+  }
+}

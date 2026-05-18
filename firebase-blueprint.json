@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a user of the MetaShift platform.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique identifier from Firebase Auth" },
+        "email": { "type": "string", "format": "email", "description": "User's email address" },
+        "displayName": { "type": "string", "description": "User's full name from Google Auth" },
+        "photoURL": { "type": "string", "description": "URL to user's profile picture" },
+        "lastLogin": { "type": "string", "format": "date-time", "description": "Timestamp of the last login" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp when the user account was created" },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "autoAI": { "type": "boolean", "default": false },
+            "batchMode": { "type": "boolean", "default": true },
+            "theme": { "type": "string", "enum": ["dark", "light", "cyber"], "default": "dark" }
+          }
+        }
+      },
+      "required": ["uid", "email", "createdAt", "lastLogin"]
+    },
+    "HistoryItem": {
+      "title": "History Item",
+      "description": "Record of a processing event.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "fileCount": { "type": "number" },
+        "filenames": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["completed", "failed"] }
+      },
+      "required": ["timestamp", "fileCount", "status"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profile data stored by their UID."
+    },
+    "users/{userId}/history/{historyId}": {
+      "schema": "HistoryItem",
+      "description": "History of image processing for the user."
+    }
+  }
+}
