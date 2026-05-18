@@ -61,8 +61,16 @@ async function testConnection() {
     await getDocFromServer(doc(db, 'test', 'connection'));
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message.includes('the client is offline') || error.message.includes('permission-denied')) {
-        console.warn("Firebase Connection Warning: If you see permission errors, ensure your Firestore rules are deployed and domains are authorized.");
+      if (error.message.includes('the client is offline')) {
+        console.error("Firebase Connection Error: The client is offline.");
+        console.warn("TROUBLESHOOTING STEPS:");
+        console.warn("1. Ensure Firestore is initialized in the Firebase Console (Create Database).");
+        console.warn("2. Add this domain to 'Authorized domains' in Firebase Auth Settings:");
+        console.warn(`   ${window.location.hostname}`);
+        console.warn("3. Ensure Google Authentication is enabled in your Firebase project.");
+        console.warn("4. Check if your project requires a specific Database ID (if using non-default).");
+      } else if (error.message.includes('permission-denied')) {
+         console.warn("Firebase Permission Error: Ensure your Firestore rules are deployed.");
       }
     }
   }

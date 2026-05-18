@@ -377,7 +377,7 @@ export const AppInterface = ({ onClose }: { onClose: () => void }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl p-4 md:p-10 flex flex-col overflow-y-auto overflow-x-hidden"
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl md:p-10 flex flex-col overflow-y-auto overflow-x-hidden"
     >
       <div className="max-w-[1400px] mx-auto w-full flex flex-col min-h-full">
         <div className="flex items-center justify-between mb-4 md:mb-8">
@@ -400,12 +400,12 @@ export const AppInterface = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <motion.div 
-          className="relative w-full flex-1 rounded-3xl p-[1px] bg-gradient-to-b from-white/20 to-white/0 overflow-hidden shadow-2xl flex flex-col"
+          className="relative w-full flex-1 md:rounded-3xl p-[1px] bg-gradient-to-b from-white/20 to-white/0 overflow-visible md:overflow-hidden shadow-2xl flex flex-col"
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="w-full min-h-0 rounded-[23px] bg-[#0d1015]/95 backdrop-blur-2xl flex flex-col flex-1 overflow-hidden">
+          <div className="w-full min-h-0 md:rounded-[23px] bg-[#0d1015]/95 backdrop-blur-2xl flex flex-col flex-1 overflow-visible md:overflow-hidden">
             {/* Toolbar */}
             <div className="h-12 border-b border-white/5 flex items-center justify-between px-6 bg-white/[0.02]">
               <div className="flex gap-1.5">
@@ -555,16 +555,16 @@ export const AppInterface = ({ onClose }: { onClose: () => void }) => {
                     key="edit"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="flex-1 flex flex-col lg:flex-row overflow-hidden"
+                    className="flex-1 flex flex-col lg:flex-row overflow-visible lg:overflow-hidden"
                   >
                     {/* LEFT PANEL: Navigator */}
-                    <div className="lg:w-1/4 border-b lg:border-b-0 lg:border-r border-white/5 p-4 md:p-6 flex flex-col gap-4 bg-black/20 overflow-hidden">
+                    <div className="lg:w-1/4 border-b lg:border-b-0 lg:border-r border-white/5 p-4 md:p-6 flex flex-col gap-4 bg-black/20 overflow-visible lg:overflow-hidden flex-shrink-0">
                       <div className="flex flex-col gap-3 min-h-0 flex-1">
                         <div className="flex justify-between text-[9px] md:text-[10px] font-black text-white/40 uppercase tracking-widest">
                           <span>Queue</span>
                           <span className="text-brand">{files.length} Assets</span>
                         </div>
-                        <div className="flex-1 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto flex flex-row lg:flex-col gap-2 p-1 pr-2 scrollbar-none min-h-[80px] lg:max-h-none">
+                        <div className="flex-1 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto flex flex-row lg:flex-col gap-2 p-1 pr-2 scrollbar-none min-h-[100px] lg:max-h-none">
                           {files.map((file) => (
                             <motion.div 
                               layout
@@ -608,22 +608,22 @@ export const AppInterface = ({ onClose }: { onClose: () => void }) => {
                     </div>
  
                     {/* CENTER PANEL: Editor */}
-                    <div className="flex-1 p-4 md:p-8 flex flex-col gap-4 md:gap-8 bg-white/[0.01] overflow-y-auto">
+                    <div className="flex-1 p-4 md:p-8 flex flex-col gap-4 md:gap-8 bg-white/[0.01] lg:overflow-y-auto">
                       <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 mb-2 border-b border-white/5 pb-4 md:pb-6">
                         <div className="w-16 h-16 md:w-32 md:h-32 rounded-xl md:rounded-2xl bg-black overflow-hidden border border-white/10 shadow-2xl flex-shrink-0">
                           <img src={selectedFile?.preview} alt="edit" className="w-full h-full object-cover" />
                         </div>
-                        <div className="flex-1 min-w-0 text-center sm:text-left">
-                          <h4 className="text-lg md:text-2xl font-black uppercase tracking-tighter italic truncate">{selectedFile?.file.name}</h4>
+                        <div className="flex-1 min-w-0 text-center sm:text-left overflow-hidden">
+                          <h4 className="text-base md:text-xl font-black uppercase tracking-tighter italic truncate w-full">{selectedFile?.file.name}</h4>
                           <span className="text-[8px] md:text-[10px] text-white/30 font-bold tracking-widest uppercase">{formatSize(selectedFile?.file?.size || 0)} • READY</span>
                         </div>
-                        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
+                        <div className="flex items-center gap-3 px-4 py-3 md:py-2 rounded-xl bg-white/5 border border-white/10">
                           <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Batch Sync</span>
                           <button 
                             onClick={() => setIsBatchMode(!isBatchMode)}
-                            className={`w-8 h-4 rounded-full p-0.5 transition-colors ${isBatchMode ? 'bg-brand' : 'bg-white/20'}`}
+                            className={`w-10 h-5 md:w-8 md:h-4 rounded-full p-0.5 transition-colors ${isBatchMode ? 'bg-brand' : 'bg-white/20'}`}
                           >
-                            <div className={`w-3 h-3 rounded-full bg-white transition-transform ${isBatchMode ? 'translate-x-4' : 'translate-x-0'}`} />
+                            <div className={`w-4 h-4 md:w-3 md:h-3 rounded-full bg-white transition-transform ${isBatchMode ? 'translate-x-5 md:translate-x-4' : 'translate-x-0'}`} />
                           </button>
                         </div>
                       </div>
@@ -646,7 +646,7 @@ export const AppInterface = ({ onClose }: { onClose: () => void }) => {
                              </label>
                              <input 
                                type="text" 
-                               className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-[12px] md:text-[13px] focus:border-brand outline-none transition-all placeholder:text-white/5 text-white/80 font-medium"
+                               className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl px-4 py-4 md:px-5 md:py-4 text-[13px] focus:border-brand outline-none transition-all placeholder:text-white/5 text-white/80 font-medium w-full"
                                value={selectedFile?.editedMetadata?.[item.field as keyof ImageMetadata] || ''}
                                onChange={(e) => {
                                   if (isBatchMode) applyToAll(item.field as keyof ImageMetadata, e.target.value);
@@ -689,7 +689,7 @@ export const AppInterface = ({ onClose }: { onClose: () => void }) => {
                     </div>
  
                     {/* RIGHT PANEL: Status & Export */}
-                    <div className="lg:w-1/4 border-t lg:border-t-0 lg:border-l border-white/5 p-4 md:p-6 flex flex-col gap-6 md:gap-8 bg-black/20">
+                    <div className="lg:w-1/4 border-t lg:border-t-0 lg:border-l border-white/5 p-4 md:p-6 flex flex-col gap-6 md:gap-8 bg-black/20 flex-shrink-0">
                       <div className="hidden lg:flex flex-col gap-3">
                         <div className="flex justify-between text-[10px] font-black tracking-widest uppercase mb-1">
                           <span className="text-white/40">Engine</span>
